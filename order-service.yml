@@ -20,6 +20,7 @@ spring:
     username: user
     password: pass
 
+# Add this property properly so it's resolvable
 product:
   base-url: http://localhost:8081
 
