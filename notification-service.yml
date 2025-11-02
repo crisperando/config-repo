@@ -1,0 +1,29 @@
+# config-repo/notification-service.yml
+
+server:
+  port: 8083
+
+spring:
+  rabbitmq:
+    host: localhost         # or 'rabbitmq' if using Docker Compose
+    port: 5672
+    username: user
+    password: pass
+    virtual-host: /
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+app:
+  rabbit:
+    exchange: orders.exchange
+    queue: orders.notifications
+    routing-key: order.created
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
