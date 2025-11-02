@@ -1,0 +1,22 @@
+# config-repo/product-service.yml
+
+server:
+  port: 8081   # avoid 8080 collisions
+
+spring:
+  datasource:
+    url: jdbc:sqlserver://localhost:1433;encrypt=false;databaseName=products
+    username: sa
+    password: Admin!12345
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.SQLServerDialect
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info

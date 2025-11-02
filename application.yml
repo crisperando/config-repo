@@ -1,0 +1,16 @@
+# =========================================
+# Global configuration shared by all services
+# =========================================
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,refresh,env
+
+# Common logging setup
+logging:
+  level:
+    root: INFO
+    org.springframework.web: INFO
+    com.training: DEBUG

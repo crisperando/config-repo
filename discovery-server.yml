@@ -1,0 +1,28 @@
+server:
+  port: 8761
+
+spring:
+  application:
+    name: discovery-server
+
+eureka:
+  client:
+    # A Eureka server should not register itself or fetch registry from others
+    register-with-eureka: false
+    fetch-registry: false
+  server:
+    # Reasonable defaults for labs; adjust as you like
+    enable-self-preservation: true
+    renewal-percent-threshold: 0.5
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+logging:
+  level:
+    root: INFO
+    com.netflix.discovery: INFO
+    com.netflix.eureka: INFO

@@ -1,0 +1,21 @@
+# =========================================
+# Configuration specific to order-service
+# =========================================
+spring:
+  application:
+    name: order-service
+
+# A property that can be changed dynamically
+welcome:
+  message: "Hello from Order Service (central config)"
+
+# Example of service-specific settings
+orders:
+  tax-rate: 0.05
+  discount-enabled: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,refresh

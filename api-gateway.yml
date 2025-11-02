@@ -1,0 +1,44 @@
+# =========================================
+# Configuration specific to API Gateway
+# =========================================
+spring:
+  application:
+    name: api-gateway
+
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+
+      routes:
+        # Product Service Route
+        - id: product-service
+          uri: lb://product-service
+          predicates:
+            - Path=/api/products/**
+          filters:
+            - StripPrefix=1
+            - AddResponseHeader=X-Gateway, Activity5
+            - AddRequestHeader=X-Source, Gateway
+
+        # Order Service Route
+        - id: order-service
+          uri: lb://order-service
+          predicates:
+            - Path=/api/orders/**
+          filters:
+            - StripPrefix=1
+            - AddResponseHeader=X-Gateway, Activity5
+            - AddRequestHeader=X-Source, Gateway
+
+      # Optional: default filter for all routes
+      default-filters:
+        - AddResponseHeader=X-Env, Activity5
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,refresh
