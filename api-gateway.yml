@@ -1,6 +1,9 @@
 # =========================================
-# Configuration specific to API Gateway
+# API Gateway (Spring Cloud Gateway)
 # =========================================
+server:
+  port: 8080
+
 spring:
   application:
     name: api-gateway
@@ -13,32 +16,53 @@ spring:
           lower-case-service-id: true
 
       routes:
-        # Product Service Route
+        # Product Service
         - id: product-service
           uri: lb://product-service
           predicates:
             - Path=/api/products/**
+          # IMPORTANT: product-service exposes /api/products/**
+          # Do NOT strip the first path segment, or it becomes /products/**
+          # and will 404 downstream. So no StripPrefix here.
           filters:
-            - StripPrefix=1
             - AddResponseHeader=X-Gateway, Activity5
             - AddRequestHeader=X-Source, Gateway
 
-        # Order Service Route
+        # Order Service
         - id: order-service
           uri: lb://order-service
           predicates:
             - Path=/api/orders/**
+          # Same reasoning as product-service: don't strip.
           filters:
-            - StripPrefix=1
             - AddResponseHeader=X-Gateway, Activity5
             - AddRequestHeader=X-Source, Gateway
 
-      # Optional: default filter for all routes
+      # Optional default filter for all routes
       default-filters:
         - AddResponseHeader=X-Env, Activity5
 
+# Eureka client (gateway needs discovery to resolve lb://…)
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+# Actuator: show info/env to avoid empty /actuator/info
 management:
   endpoints:
     web:
       exposure:
-        include: health,info,refresh
+        include: health,info,env,configprops
+  info:
+    env.enabled: true
+    java.enabled: true
+    os.enabled: true
+    git.mode: full
+
+# Optional: add some info so /actuator/info is not empty
+info:
+  app:
+    name: api-gateway
+    description: Spring Cloud API Gateway for Activity 5
+    version: 0.0.1
