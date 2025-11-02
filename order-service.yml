@@ -1,21 +1,30 @@
-# =========================================
-# Configuration specific to order-service
-# =========================================
+# config-repo/order-service.yml
+
+server:
+  port: 8082
+
 spring:
-  application:
-    name: order-service
+  datasource:
+    url: jdbc:sqlserver://localhost:1433;encrypt=false;databaseName=orders
+    username: sa
+    password: Admin!12345
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.SQLServerDialect
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: user
+    password: pass
 
-# A property that can be changed dynamically
-welcome:
-  message: "Hello from Order Service (central config)"
-
-# Example of service-specific settings
-orders:
-  tax-rate: 0.05
-  discount-enabled: true
+product:
+  base-url: http://localhost:8081
 
 management:
   endpoints:
     web:
       exposure:
-        include: health,info,refresh
+        include: health,info
