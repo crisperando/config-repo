@@ -8,6 +8,7 @@ spring:
     url: jdbc:sqlserver://localhost:1433;encrypt=false;databaseName=orders
     username: sa
     password: Admin!12345
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
   jpa:
     hibernate:
       ddl-auto: update
