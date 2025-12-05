@@ -46,7 +46,7 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: http://api-gateway:8761/eureka/
 
 # Actuator: show info/env to avoid empty /actuator/info
 management:

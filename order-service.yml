@@ -5,7 +5,7 @@ server:
 
 spring:
   datasource:
-    url: jdbc:sqlserver://localhost:1433;encrypt=false;databaseName=orders
+    url: jdbc:sqlserver://sqlserver:1433;encrypt=false;databaseName=orders
     username: sa
     password: Admin!12345
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
@@ -16,14 +16,14 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.SQLServerDialect
   rabbitmq:
-    host: localhost
+    host: rabbitmq
     port: 5672
     username: user
     password: pass
 
 # Add this property properly so it's resolvable
 product:
-  base-url: http://localhost:8081
+  base-url: http://product-service:8081
 
 management:
   endpoints:
